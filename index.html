@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TicTacToe</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Archivo+Black');
+
+      body
+      {
+        margin: auto;
+        font-family: 'Archivo Black', sans-serif;
+        background-color: #12BDAC;
+      }
+
+      h1
+      {
+        font-size: x-large;
+        color: black;
+      }
+
+      .Square
+      {
+        border: 4px solid #0d9083;
+        text-align: center;
+        font-size: 62px;
+        width: 400px;
+        height: 200px;
+        color: #545454;
+      }
+
+      #message
+      {
+        font-size: xx-large;
+        padding-bottom: 17px;
+      }
+    </style>
+    <script>
+      function startGame()
+      {
+        for (i = 1; i <= 9; i++)
+        {
+     	    clearBox(i);
+        }
+
+        document.turn = "X";
+        document.winner = null;
+        setMessage(document.turn + " get's to start the game")
+      }
+
+      function clearBox(number)
+      {
+	      document.getElementById("s" + number).innerText = "";
+      }
+
+      function getBox(number)
+      {
+        return document.getElementById("s" + number).innerText;
+      }
+
+      function setMessage(msg)
+      {
+        document.getElementById("message").innerText = msg;
+      }
+
+      function check(a, b, c, move)
+      {
+        let result = false;
+        if (getBox(a) == move && getBox(b) == move && getBox(c) == move)
+        {
+          result = true;
+        }
+        return result;
+      }
+
+      function checkForWinner(move)
+      {
+        let result = false;
+	      if (check(1, 2, 3, move) || check(4, 5, 6, move) || check(7, 8, 9, move) || check(1, 4, 7, move) || check(2, 5, 8, move) || check(3, 6, 9, move) || check(1, 5, 9, move) || check(3, 5, 7, move))
+	      {
+		      result = true;
+	      }
+	      return result;
+      }
+
+      function changingTurn()
+      {
+	      if (checkForWinner(document.turn))
+	      {
+		      setMessage(document.turn + " has Won!");
+		      document.winner = document.turn;
+	      }
+	      else if (document.turn == "X")
+	      {
+		      document.turn = "O";
+		      setMessage("It's " + document.turn + "'s turn");
+	      }
+	      else
+	      {
+		      document.turn = "X";
+		      setMessage("It's " + document.turn + "'s turn");
+	      }
+      }
+
+      function nextMove(square)
+      {
+	      if (document.winner != null)
+	      {
+		      setMessage(document.turn + " has Won!");
+	      }
+	      else if (square.innerText == "")
+	      {
+		      square.innerText = document.turn;
+		      changingTurn();
+	      }
+	      else if (getBox(1) != "" && getBox(2) != "" && getBox(3) != "" && getBox(4) != "" && getBox(5) != "" && getBox(6) != "" && getBox(7) != "" && getBox(8) != "" && getBox(9) != "")
+	      {
+		      setMessage("It's a draw!");
+	      }
+	      else
+	      {
+		      setMessage("Choose another square");
+	      }
+      }
+    </script>
+  </head>
+  <body onload="startGame()">
+    <center><h1>Tic Tac Toe</h1></center>
+    <center>
+      <div id="message"></div>
+    </center>
+    <center>
+      <table width="1000px" height="600px">
+        <tr>
+          <td class="Square" id="s1" onclick="nextMove(this)"></td>
+          <td class="Square" id="s2" onclick="nextMove(this)"></td>
+          <td class="Square" id="s3" onclick="nextMove(this)"></td>
+        </tr>
+        <tr>
+          <td class="Square" id="s4" onclick="nextMove(this)"></td>
+          <td class="Square" id="s5" onclick="nextMove(this)"></td>
+          <td class="Square" id="s6" onclick="nextMove(this)"></td>
+        </tr>
+        <tr>
+          <td class="Square" id="s7" onclick="nextMove(this)"></td>
+          <td class="Square" id="s8" onclick="nextMove(this)"></td>
+          <td class="Square" id="s9" onclick="nextMove(this)"></td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>
